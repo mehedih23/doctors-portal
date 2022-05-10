@@ -3,6 +3,15 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
+    /* container: {
+      padding: {
+        DEFAULT: '1rem',
+        sm: '2rem',
+        lg: '4rem',
+        xl: '5rem',
+        '2xl': '6rem',
+      },
+    }, */
     extend: {
       backgroundImage: {
         'banner-image': "url('/src/assets/images/bg.png')",
@@ -21,8 +30,6 @@ module.exports = {
           "base-100": "#ffffff",
         },
       },
-      "dark",
-      "cupcake",
     ],
   },
   plugins: [require("daisyui")],
