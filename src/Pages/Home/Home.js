@@ -9,7 +9,7 @@ import Contact from './Contact'
 
 const Home = () => {
     return (
-        <div className='md:px-12'>
+        <div>
             <Banner />
             <Info />
             <Services></Services>
