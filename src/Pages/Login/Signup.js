@@ -1,16 +1,37 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { useForm } from "react-hook-form";
-import { Link } from 'react-router-dom';
 
-const Login = () => {
+
+const Signup = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
     const onSubmit = data => console.log(data);
     return (
         <div className='h-screen flex justify-center items-center'>
             <div className="card w-96 bg-base-100 shadow-xl">
                 <div className="card-body">
-                    <h2 className="text-3xl text-center font-bold">Login</h2>
+                    <h2 className="text-3xl text-center font-bold">Signup</h2>
                     <form className='' onSubmit={handleSubmit(onSubmit)}>
+
+                        {/* name field start */}
+                        <label className="label">
+                            <span className="label-text">Name</span>
+                        </label>
+                        <input
+                            type="text"
+                            {...register("name", {
+                                required: {
+                                    value: true,
+                                    message: 'Name is required'
+                                }
+                            })}
+                            placeholder="Type here"
+                            className="input input-bordered w-full max-w-xs" />
+                        <label className="label">
+                            {errors.email?.type === 'required' && <span className="label-text-alt text-sm text-red-600">{errors.email.message}</span>}
+                            {errors.email?.type === 'pattern' && <span className="label-text-alt text-sm text-red-600">{errors.email.message}</span>}
+                        </label>
+                        {/* name field end */}
 
                         {/* email field start */}
                         <label className="label">
@@ -76,12 +97,9 @@ const Login = () => {
                         </label>
                         {/* password field end */}
 
-                        {/* forgot password start */}
-                        <p className='text-sm'>Forgot Password ?</p>
-                        {/* forgot password end */}
-                        <input type="submit" value="Login" className='btn btn-active w-full max-w-xs mt-3' />
+                        <input type="submit" value="Register" className='btn btn-active w-full max-w-xs mt-3' />
 
-                        <p className='my-4'>New to Doctors Portal? <Link to='/signup' className='text-secondary font-bold'>Create an account</Link></p>
+                        <p className='my-4'>Already have an account? <Link to='/login' className='text-secondary font-bold'>Login</Link></p>
                         <div className="divider mb-4">OR</div>
                         <button className='btn btn-outline w-full max-w-xs'>CONTINUE WITH GOOGLE</button>
                     </form>
@@ -91,4 +109,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default Signup
