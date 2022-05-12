@@ -1,11 +1,53 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useForm } from "react-hook-form";
+import auth from '../../firebase.init';
+import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
+import { ClipLoader } from 'react-spinners';
 
 
 const Signup = () => {
+    // from form-hook //
     const { register, formState: { errors }, handleSubmit } = useForm();
-    const onSubmit = data => console.log(data);
+    // firebase login services //
+    const [
+        createUserWithEmailAndPassword,
+        user,
+        loading,
+        errorCreate,
+    ] = useCreateUserWithEmailAndPassword(auth);
+    const [updateProfile, updating, errorUpdate] = useUpdateProfile(auth);
+    const [signInWithGoogle, userGoogle, loadingGoogle, errorGoogle] = useSignInWithGoogle(auth);
+    // firebase login services //
+
+
+    // loadings //
+    if (loading || updating || loadingGoogle) {
+        return <div className='h-screen flex justify-center items-center'>
+            <ClipLoader loading={loading || updating || loadingGoogle} size={150} />
+        </div>
+    }
+
+    // errors //
+    let signInError;
+    if (errorCreate || errorUpdate || errorGoogle) {
+        signInError = <span className='text-sm text-red-600'>{errorCreate?.message || errorUpdate?.message || errorGoogle?.message}</span>
+    }
+
+    // users //
+    if (user || userGoogle) {
+        console.log('Hellow from ', user || userGoogle);
+    }
+
+    // from form-hook function //
+    const onSubmit = async data => {
+        const name = data.name;
+        const email = data.email;
+        const password = data.password;
+        await createUserWithEmailAndPassword(email, password)
+        await updateProfile({ displayName: name });
+    };
+    // from form hook api //
     return (
         <div className='h-screen flex justify-center items-center'>
             <div className="card w-96 bg-base-100 shadow-xl">
@@ -74,7 +116,7 @@ const Signup = () => {
                                     message: 'One special character required'
                                 },
                                 minLength: {
-                                    value: 8,
+                                    value: 6,
                                     message: 'Must be 6 characters longer'
                                 }
                                 ,
@@ -98,11 +140,14 @@ const Signup = () => {
                         {/* password field end */}
 
                         <input type="submit" value="Register" className='btn btn-active w-full max-w-xs mt-3' />
-
-                        <p className='my-4'>Already have an account? <Link to='/login' className='text-secondary font-bold'>Login</Link></p>
-                        <div className="divider mb-4">OR</div>
-                        <button className='btn btn-outline w-full max-w-xs'>CONTINUE WITH GOOGLE</button>
                     </form>
+                    <p className='mt-4'>Already have an account? <Link to='/login' className='text-secondary font-bold'>Login</Link></p>
+                    <div className="divider">OR</div>
+                    <button
+                        onClick={() => signInWithGoogle()}
+                        className='btn btn-outline w-full max-w-xs mb-2'
+                    >CONTINUE WITH GOOGLE</button>
+                    {signInError}
                 </div>
             </div>
         </div>

@@ -1,3 +1,4 @@
+import { Toaster } from 'react-hot-toast';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import Appointment from './Pages/Appointment/Appointment';
@@ -10,6 +11,7 @@ import Navbar from './Pages/Shared/Navbar';
 function App() {
   return (
     <>
+      <Toaster></Toaster>
       <div className='max-w-7xl mx-auto md:px-12'>
         <Navbar></Navbar>
         <Routes>

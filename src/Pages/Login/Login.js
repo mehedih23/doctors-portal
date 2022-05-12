@@ -1,10 +1,20 @@
 import React from 'react'
 import { useForm } from "react-hook-form";
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
-    const onSubmit = data => console.log(data);
+    let location = useLocation();
+    let from = location.state?.from?.pathname || "/";
+    let navigate = useNavigate();
+
+    if (user) {
+        navigate(from, { replace: true });
+    }
+
+    const onSubmit = data => {
+        console.log(data)
+    };
     return (
         <div className='h-screen flex justify-center items-center'>
             <div className="card w-96 bg-base-100 shadow-xl">
