@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useForm } from "react-hook-form";
 import auth from '../../firebase.init';
 import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
@@ -20,6 +20,11 @@ const Signup = () => {
     const [signInWithGoogle, userGoogle, loadingGoogle, errorGoogle] = useSignInWithGoogle(auth);
     // firebase login services //
 
+    let location = useLocation();
+    let from = location.state?.from?.pathname || "/";
+    let navigate = useNavigate();
+
+
 
     // loadings //
     if (loading || updating || loadingGoogle) {
@@ -36,7 +41,7 @@ const Signup = () => {
 
     // users //
     if (user || userGoogle) {
-        console.log('Hellow from ', user || userGoogle);
+        navigate(from, { replace: true });
     }
 
     // from form-hook function //

@@ -1,19 +1,51 @@
 import React from 'react'
+import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { ClipLoader } from 'react-spinners';
+import auth from '../../firebase.init';
 
 const Login = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
+    const [
+        signInWithEmailAndPassword,
+        user,
+        loading,
+        error,
+    ] = useSignInWithEmailAndPassword(auth);
+    const [signInWithGoogle, userGoogle, loadingGoogle, errorGoogle] = useSignInWithGoogle(auth);
     let location = useLocation();
     let from = location.state?.from?.pathname || "/";
     let navigate = useNavigate();
 
     if (user) {
+
+    }
+
+    // loadings //
+    if (loading || loadingGoogle) {
+        return <div className='h-screen flex justify-center items-center'>
+            <ClipLoader loading={loading || loadingGoogle} size={150} />
+        </div>
+    }
+
+    // errors //
+    let signInError;
+    if (error || errorGoogle) {
+        signInError = <span className='text-sm text-red-600'>{error?.message || errorGoogle?.message}</span>
+    }
+
+    // users //
+    if (user || userGoogle) {
         navigate(from, { replace: true });
     }
 
     const onSubmit = data => {
         console.log(data)
+        const email = data.email;
+        const password = data.password;
+        signInWithEmailAndPassword(email, password)
+
     };
     return (
         <div className='h-screen flex justify-center items-center'>
@@ -32,10 +64,6 @@ const Login = () => {
                                 required: {
                                     value: true,
                                     message: 'Email is required'
-                                },
-                                pattern: {
-                                    value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                                    message: 'Provide a valid email address'
                                 }
                             })}
                             placeholder="Type here"
@@ -57,19 +85,6 @@ const Login = () => {
                                 required: {
                                     value: true,
                                     message: 'Password is required'
-                                },
-                                pattern: {
-                                    value: /^(?=.*[\W])[\w\W]{6,20}$/,
-                                    message: 'One special character required'
-                                },
-                                minLength: {
-                                    value: 8,
-                                    message: 'Must be 6 characters longer'
-                                }
-                                ,
-                                maxLength: {
-                                    value: 20,
-                                    message: 'Must be 20 characters smaller'
                                 }
                             })}
                             placeholder="Type here"
@@ -77,12 +92,6 @@ const Login = () => {
                         <label className="label">
                             {/* password error */}
                             {errors.password?.type === 'required' && <span className="label-text-alt text-sm text-red-600">{errors.password.message}</span>}
-                            {/* pattern error */}
-                            {errors.password?.type === 'pattern' && <span className="label-text-alt text-sm text-red-600">{errors.password.message}</span>}
-                            {/* minlength error */}
-                            {errors.password?.type === 'minLength' && <span className="label-text-alt text-sm text-red-600">{errors.password.message}</span>}
-                            {/* maxlength error */}
-                            {errors.password?.type === 'maxLength' && <span className="label-text-alt text-sm text-red-600">{errors.password.message}</span>}
                         </label>
                         {/* password field end */}
 
@@ -90,11 +99,15 @@ const Login = () => {
                         <p className='text-sm'>Forgot Password ?</p>
                         {/* forgot password end */}
                         <input type="submit" value="Login" className='btn btn-active w-full max-w-xs mt-3' />
-
-                        <p className='my-4'>New to Doctors Portal? <Link to='/signup' className='text-secondary font-bold'>Create an account</Link></p>
-                        <div className="divider mb-4">OR</div>
-                        <button className='btn btn-outline w-full max-w-xs'>CONTINUE WITH GOOGLE</button>
                     </form>
+                    {signInError}
+
+                    <p className='my-4'>New to Doctors Portal? <Link to='/signup' className='text-secondary font-bold'>Create an account</Link></p>
+                    <div className="divider mb-4">OR</div>
+                    <button
+                        onClick={() => signInWithGoogle()}
+                        className='btn btn-outline w-full max-w-xs'
+                    >CONTINUE WITH GOOGLE</button>
                 </div>
             </div>
         </div>
