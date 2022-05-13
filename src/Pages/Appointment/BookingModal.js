@@ -3,6 +3,7 @@ import React from 'react'
 import auth from '../../firebase.init';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { ClipLoader } from 'react-spinners';
+import toast from 'react-hot-toast';
 
 const BookingModal = ({ date, setTreatment, treatment }) => {
     const { _id, name, slots } = treatment;
@@ -15,11 +16,33 @@ const BookingModal = ({ date, setTreatment, treatment }) => {
     const handleBooking = (e) => {
         e.preventDefault();
         const time = e.target.slot.value;
-        const treatment = name;
-        const patientName = e.target.name.value;
         const phone = e.target.number.value;
-        const email = e.target.email.value;
-        console.log(_id, time, treatment, patientName, phone, email);
+        const bookingDate = format(date, 'PP');
+        const info = {
+            _id: _id,
+            date: bookingDate,
+            time: time,
+            treatmentName: name,
+            patientName: user?.displayName,
+            phone: phone,
+            email: user?.email,
+        };
+        fetch('http://localhost:5000/booking', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(info)
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                if (data.success) {
+                    toast.success(`Appointment is set on ${bookingDate} at ${time}`)
+                } else {
+                    toast.error(`Alredy have an appointment on ${bookingDate} at ${time}`)
+                }
+            })
         setTreatment(null)
     }
     return (

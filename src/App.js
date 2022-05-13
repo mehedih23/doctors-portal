@@ -7,7 +7,6 @@ import ForgotPassword from './Pages/Login/ForgotPassword';
 import Login from './Pages/Login/Login';
 import RequireAuth from './Pages/Login/RequireAuth';
 import Signup from './Pages/Login/Signup';
-import VerifyEmail from './Pages/Login/VerifyEmail';
 import Footer from './Pages/Shared/Footer';
 import Navbar from './Pages/Shared/Navbar';
 
@@ -27,7 +26,6 @@ function App() {
           <Route path='/login' element={<Login />}></Route>
           <Route path='signup' element={<Signup></Signup>}></Route>
           <Route path='forgot-password' element={<ForgotPassword></ForgotPassword>}></Route>
-          <Route path='/verifyemail' element={<VerifyEmail></VerifyEmail>}></Route>
         </Routes>
       </div>
       <Footer></Footer>
