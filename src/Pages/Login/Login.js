@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -18,9 +18,13 @@ const Login = () => {
     let from = location.state?.from?.pathname || "/";
     let navigate = useNavigate();
 
-    if (user) {
+    // users //
+    useEffect(() => {
+        if (user || userGoogle) {
+            navigate(from, { replace: true });
+        }
+    }, [from, navigate, user, userGoogle])
 
-    }
 
     // loadings //
     if (loading || loadingGoogle) {
@@ -33,11 +37,6 @@ const Login = () => {
     let signInError;
     if (error || errorGoogle) {
         signInError = <span className='text-sm text-red-600'>{error?.message || errorGoogle?.message}</span>
-    }
-
-    // users //
-    if (user || userGoogle) {
-        navigate(from, { replace: true });
     }
 
     const onSubmit = data => {
@@ -96,7 +95,7 @@ const Login = () => {
                         {/* password field end */}
 
                         {/* forgot password start */}
-                        <p className='text-sm'>Forgot Password ?</p>
+                        <Link to='/forgot-password' className='text-sm underline text-secondary'>Forgot Password?</Link>
                         {/* forgot password end */}
                         <input type="submit" value="Login" className='btn btn-active w-full max-w-xs mt-3' />
                     </form>

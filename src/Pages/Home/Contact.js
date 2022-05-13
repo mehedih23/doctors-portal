@@ -18,7 +18,7 @@ const Contact = () => {
                 <input type="text" placeholder="Email Address" className="mb-4 input w-full max-w-sm" />
                 <input type="text" placeholder="Subject" className="mb-4 input w-full max-w-sm" />
                 <textarea className="mb-4 textarea w-full max-w-sm" placeholder="Your message" rows="5" ></textarea>
-                <button className="btn btn-primary uppercase text-white font-bold bg-gradient-to-r from-secondary to-primary ">Get Started</button>
+                <button className="btn btn-primary uppercase text-white font-bold bg-gradient-to-r from-secondary to-primary ">Send</button>
             </form>
         </section>
     )

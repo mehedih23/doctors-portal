@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useForm } from "react-hook-form";
 import auth from '../../firebase.init';
 import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
 import { ClipLoader } from 'react-spinners';
+import toast from 'react-hot-toast';
 
 
 const Signup = () => {
@@ -15,7 +16,7 @@ const Signup = () => {
         user,
         loading,
         errorCreate,
-    ] = useCreateUserWithEmailAndPassword(auth);
+    ] = useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
     const [updateProfile, updating, errorUpdate] = useUpdateProfile(auth);
     const [signInWithGoogle, userGoogle, loadingGoogle, errorGoogle] = useSignInWithGoogle(auth);
     // firebase login services //
@@ -24,6 +25,17 @@ const Signup = () => {
     let from = location.state?.from?.pathname || "/";
     let navigate = useNavigate();
 
+
+    // users //
+    useEffect(() => {
+        if (user || userGoogle) {
+            navigate(from, { replace: true });
+        }
+    }, [from, navigate, user, userGoogle])
+
+    /* useEffect(()=>{
+        if(user.)
+    },[]) */
 
 
     // loadings //
@@ -39,11 +51,6 @@ const Signup = () => {
         signInError = <span className='text-sm text-red-600'>{errorCreate?.message || errorUpdate?.message || errorGoogle?.message}</span>
     }
 
-    // users //
-    if (user || userGoogle) {
-        navigate(from, { replace: true });
-    }
-
     // from form-hook function //
     const onSubmit = async data => {
         const name = data.name;
@@ -51,14 +58,15 @@ const Signup = () => {
         const password = data.password;
         await createUserWithEmailAndPassword(email, password)
         await updateProfile({ displayName: name });
+        toast.success('Please Verify your email.', { id: 'verify-email' });
     };
-    // from form hook api //
+
     return (
         <div className='h-screen flex justify-center items-center'>
             <div className="card w-96 bg-base-100 shadow-xl">
                 <div className="card-body">
                     <h2 className="text-3xl text-center font-bold">Signup</h2>
-                    <form className='' onSubmit={handleSubmit(onSubmit)}>
+                    <form onSubmit={handleSubmit(onSubmit)}>
 
                         {/* name field start */}
                         <label className="label">
