@@ -5,7 +5,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { ClipLoader } from 'react-spinners';
 import toast from 'react-hot-toast';
 
-const BookingModal = ({ date, setTreatment, treatment }) => {
+const BookingModal = ({ date, setTreatment, treatment, refetch }) => {
     const { _id, name, slots } = treatment;
     const [user, loading] = useAuthState(auth);
     if (loading) {
@@ -19,7 +19,7 @@ const BookingModal = ({ date, setTreatment, treatment }) => {
         const phone = e.target.number.value;
         const bookingDate = format(date, 'PP');
         const info = {
-            _id: _id,
+            id: _id,
             date: bookingDate,
             time: time,
             treatmentName: name,
@@ -44,6 +44,7 @@ const BookingModal = ({ date, setTreatment, treatment }) => {
                 }
             })
         setTreatment(null)
+        refetch();
     }
     return (
         <div>

@@ -2,6 +2,10 @@ import { Toaster } from 'react-hot-toast';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import Appointment from './Pages/Appointment/Appointment';
+import Dashboard from './Pages/Dashboard/Dashboard';
+import MyAppointments from './Pages/Dashboard/MyAppointments';
+import MyHistory from './Pages/Dashboard/MyHistory';
+import MyReviews from './Pages/Dashboard/MyReviews';
 import Home from './Pages/Home/Home';
 import ForgotPassword from './Pages/Login/ForgotPassword';
 import Login from './Pages/Login/Login';
@@ -26,6 +30,15 @@ function App() {
           <Route path='/login' element={<Login />}></Route>
           <Route path='signup' element={<Signup></Signup>}></Route>
           <Route path='forgot-password' element={<ForgotPassword></ForgotPassword>}></Route>
+          <Route path='dashboard' element={
+            <RequireAuth>
+              <Dashboard></Dashboard>
+            </RequireAuth>
+          }>
+            <Route index element={<MyAppointments></MyAppointments>}></Route>
+            <Route path='/dashboard/reviews' element={<MyReviews></MyReviews>}></Route>
+            <Route path='/dashboard/history' element={<MyHistory></MyHistory>}></Route>
+          </Route>
         </Routes>
       </div>
       <Footer></Footer>
