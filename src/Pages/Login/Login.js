@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
 import auth from '../../firebase.init';
+import useToken from '../../hooks/useToken';
+
 
 const Login = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
@@ -14,16 +16,17 @@ const Login = () => {
         error,
     ] = useSignInWithEmailAndPassword(auth);
     const [signInWithGoogle, userGoogle, loadingGoogle, errorGoogle] = useSignInWithGoogle(auth);
+    const [token] = useToken(user || userGoogle)
     let location = useLocation();
     let from = location.state?.from?.pathname || "/";
     let navigate = useNavigate();
 
     // users //
     useEffect(() => {
-        if (user || userGoogle) {
+        if (token) {
             navigate(from, { replace: true });
         }
-    }, [from, navigate, user, userGoogle])
+    }, [from, navigate, token])
 
 
     // loadings //

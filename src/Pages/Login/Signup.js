@@ -5,6 +5,7 @@ import auth from '../../firebase.init';
 import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
 import { ClipLoader } from 'react-spinners';
 import toast from 'react-hot-toast';
+import useToken from '../../hooks/useToken';
 
 
 const Signup = () => {
@@ -19,6 +20,7 @@ const Signup = () => {
     ] = useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
     const [updateProfile, updating, errorUpdate] = useUpdateProfile(auth);
     const [signInWithGoogle, userGoogle, loadingGoogle, errorGoogle] = useSignInWithGoogle(auth);
+    const [token] = useToken(user || userGoogle)
     // firebase login services //
 
     let location = useLocation();
@@ -28,14 +30,10 @@ const Signup = () => {
 
     // users //
     useEffect(() => {
-        if (user || userGoogle) {
+        if (token) {
             navigate(from, { replace: true });
         }
-    }, [from, navigate, user, userGoogle])
-
-    /* useEffect(()=>{
-        if(user.)
-    },[]) */
+    }, [from, navigate, token, user, userGoogle])
 
 
     // loadings //
