@@ -2,6 +2,7 @@ import { Toaster } from 'react-hot-toast';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import Appointment from './Pages/Appointment/Appointment';
+import AllUser from './Pages/Dashboard/AllUser';
 import Dashboard from './Pages/Dashboard/Dashboard';
 import MyAppointments from './Pages/Dashboard/MyAppointments';
 import MyHistory from './Pages/Dashboard/MyHistory';
@@ -9,6 +10,7 @@ import MyReviews from './Pages/Dashboard/MyReviews';
 import Home from './Pages/Home/Home';
 import ForgotPassword from './Pages/Login/ForgotPassword';
 import Login from './Pages/Login/Login';
+import RequireAdmin from './Pages/Login/RequireAdmin';
 import RequireAuth from './Pages/Login/RequireAuth';
 import Signup from './Pages/Login/Signup';
 import Footer from './Pages/Shared/Footer';
@@ -38,6 +40,7 @@ function App() {
             <Route index element={<MyAppointments></MyAppointments>}></Route>
             <Route path='/dashboard/reviews' element={<MyReviews></MyReviews>}></Route>
             <Route path='/dashboard/history' element={<MyHistory></MyHistory>}></Route>
+            <Route path='/dashboard/users' element={<RequireAdmin><AllUser></AllUser></RequireAdmin>}></Route>
           </Route>
         </Routes>
       </div>
