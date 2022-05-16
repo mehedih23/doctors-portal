@@ -9,7 +9,7 @@ const BookAppointment = ({ date }) => {
     const [treatment, setTreatment] = useState(null);
     const formattedDate = format(date, 'PP');
     const { data: services, isLoading, error, refetch } = useQuery(['available', formattedDate], () =>
-        fetch(`http://localhost:5000/available?date=${formattedDate}`).then(res =>
+        fetch(`https://damp-meadow-68094.herokuapp.com/available?date=${formattedDate}`).then(res =>
             res.json()
         )
     );
@@ -18,12 +18,6 @@ const BookAppointment = ({ date }) => {
 
     if (error) return 'An error has occurred: ' + error.message
 
-
-    /* useEffect(() => {
-        fetch(`http://localhost:5000/available?date=${formattedDate}`)
-            .then(response => response.json())
-            .then(data => setServices(data))
-    }, [formattedDate]) */
     return (
         <div>
             <h3 className='text-3xl text-center mb-5 text-secondary font-bold'>Available Appointments on {format(date, 'PP')}</h3>

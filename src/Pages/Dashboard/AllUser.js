@@ -6,7 +6,7 @@ const AllUser = () => {
     // const [users, setUsers] = useState([]);
 
     const { isLoading, error, data: users, refetch } = useQuery('users', () =>
-        fetch('http://localhost:5000/users', {
+        fetch('https://damp-meadow-68094.herokuapp.com/users', {
             method: 'GET',
             headers: {
                 authorization: `Bearer ${localStorage.getItem('access-token')}`

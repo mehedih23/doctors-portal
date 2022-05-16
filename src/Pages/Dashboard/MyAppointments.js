@@ -10,7 +10,7 @@ const MyAppointments = () => {
     const [user] = useAuthState(auth);
     useEffect(() => {
         if (user) {
-            fetch(`http://localhost:5000/myappointment?email=${user.email}`, {
+            fetch(`https://damp-meadow-68094.herokuapp.com/myappointment?email=${user.email}`, {
                 method: 'GET',
                 headers: {
                     'authorization': `Bearer ${localStorage.getItem('access-token')}`

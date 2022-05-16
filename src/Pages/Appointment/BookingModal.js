@@ -27,7 +27,7 @@ const BookingModal = ({ date, setTreatment, treatment, refetch }) => {
             phone: phone,
             email: user?.email,
         };
-        fetch('http://localhost:5000/booking', {
+        fetch('https://damp-meadow-68094.herokuapp.com/booking', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
