@@ -65,8 +65,6 @@ const Signup = () => {
                 <div className="card-body">
                     <h2 className="text-3xl text-center font-bold">Signup</h2>
                     <form onSubmit={handleSubmit(onSubmit)}>
-
-                        {/* name field start */}
                         <label className="label">
                             <span className="label-text">Name</span>
                         </label>
@@ -81,12 +79,8 @@ const Signup = () => {
                             placeholder="Type here"
                             className="input input-bordered w-full max-w-xs" />
                         <label className="label">
-                            {errors.email?.type === 'required' && <span className="label-text-alt text-sm text-red-600">{errors.email.message}</span>}
-                            {errors.email?.type === 'pattern' && <span className="label-text-alt text-sm text-red-600">{errors.email.message}</span>}
+                            {errors.name?.type === 'required' && <span className="label-text-alt text-sm text-red-600">{errors?.name?.message}</span>}
                         </label>
-                        {/* name field end */}
-
-                        {/* email field start */}
                         <label className="label">
                             <span className="label-text">Email</span>
                         </label>
@@ -108,10 +102,6 @@ const Signup = () => {
                             {errors.email?.type === 'required' && <span className="label-text-alt text-sm text-red-600">{errors.email.message}</span>}
                             {errors.email?.type === 'pattern' && <span className="label-text-alt text-sm text-red-600">{errors.email.message}</span>}
                         </label>
-                        {/* email field end */}
-
-
-                        {/* password field start */}
                         <label className="label">
                             <span className="label-text">Password</span>
                         </label>
@@ -139,17 +129,11 @@ const Signup = () => {
                             placeholder="Type here"
                             className="input input-bordered w-full max-w-xs" />
                         <label className="label">
-                            {/* password error */}
                             {errors.password?.type === 'required' && <span className="label-text-alt text-sm text-red-600">{errors.password.message}</span>}
-                            {/* pattern error */}
                             {errors.password?.type === 'pattern' && <span className="label-text-alt text-sm text-red-600">{errors.password.message}</span>}
-                            {/* minlength error */}
                             {errors.password?.type === 'minLength' && <span className="label-text-alt text-sm text-red-600">{errors.password.message}</span>}
-                            {/* maxlength error */}
                             {errors.password?.type === 'maxLength' && <span className="label-text-alt text-sm text-red-600">{errors.password.message}</span>}
                         </label>
-                        {/* password field end */}
-
                         <input type="submit" value="Register" className='btn btn-active w-full max-w-xs mt-3' />
                     </form>
                     <p className='mt-4'>Already have an account? <Link to='/login' className='text-secondary font-bold'>Login</Link></p>

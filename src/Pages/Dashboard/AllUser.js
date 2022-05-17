@@ -3,8 +3,6 @@ import { useQuery } from 'react-query';
 import User from './User';
 
 const AllUser = () => {
-    // const [users, setUsers] = useState([]);
-
     const { isLoading, error, data: users, refetch } = useQuery('users', () =>
         fetch('https://damp-meadow-68094.herokuapp.com/users', {
             method: 'GET',
