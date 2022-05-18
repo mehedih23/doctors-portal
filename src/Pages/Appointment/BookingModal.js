@@ -6,7 +6,7 @@ import { ClipLoader } from 'react-spinners';
 import toast from 'react-hot-toast';
 
 const BookingModal = ({ date, setTreatment, treatment, refetch }) => {
-    const { _id, name, slots } = treatment;
+    const { _id, name, slots, price } = treatment;
     const [user, loading] = useAuthState(auth);
     if (loading) {
         return <div className='h-max flex justify-center items-center'>
@@ -26,6 +26,7 @@ const BookingModal = ({ date, setTreatment, treatment, refetch }) => {
             patientName: user?.displayName,
             phone: phone,
             email: user?.email,
+            treatmentPrice: price,
         };
         fetch('https://damp-meadow-68094.herokuapp.com/booking', {
             method: 'POST',

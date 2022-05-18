@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Service = ({ service, setTreatment }) => {
-    const { name, slots } = service;
+    const { name, slots, price } = service;
     return (
         <div className="card md:max-w-md shadow-xl">
             <div className="card-body text-center">
@@ -14,6 +14,7 @@ const Service = ({ service, setTreatment }) => {
                     }
                 </p>
                 <p>{slots.length} {slots.length > 1 ? "SPACES" : "SPACE"} AVAILABLE</p>
+                <p><small>Price : ${price}</small></p>
                 <div className="card-actions justify-center mt-5">
                     <label
                         htmlFor="booked-modal"

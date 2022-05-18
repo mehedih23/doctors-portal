@@ -8,7 +8,7 @@ const DoctorRow = ({ index, doctor, refetch }) => {
         const confirmation = window.confirm('Are You Sure ?')
         if (confirmation) {
 
-            fetch(`http://localhost:5000/doctor/${email}`, {
+            fetch(`https://damp-meadow-68094.herokuapp.com/doctor/${email}`, {
                 method: 'DELETE',
                 headers: {
                     'authorization': `Bearer ${localStorage.getItem('access-token')}`

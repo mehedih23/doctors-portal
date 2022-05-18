@@ -8,7 +8,7 @@ const AddDoctor = () => {
     const { register, formState: { errors }, handleSubmit, reset } = useForm();
 
     const { isLoading, error, data: services } = useQuery('expertIn', () =>
-        fetch('http://localhost:5000/service').then(res =>
+        fetch('https://damp-meadow-68094.herokuapp.com/service').then(res =>
             res.json()
         )
     )
@@ -41,7 +41,7 @@ const AddDoctor = () => {
                         doctorPhone: data.number,
                         expertIn: data.select
                     }
-                    fetch('http://localhost:5000/doctor', {
+                    fetch('https://damp-meadow-68094.herokuapp.com/doctor', {
                         method: 'POST',
                         headers: {
                             'content-type': 'application/json',
